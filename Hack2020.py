@@ -180,7 +180,7 @@ class Window(Frame):
     def coldfeet(self, button1, button2,img,text):
         self.dB(button1, button2, img, text)
         img=self.showImg("Wedding.png")
-        text=self.showText("You wooed Auntie Jemima with your incredible singing skills and propose to her. \n She says yes! Later that night, you are getting ready for the wedding. Do you…")
+        text=self.showText("You wooed Auntie Jemima with your incredible singing skills and propose to her. \n She says yes! Later that night, you are getting ready for the wedding. \n Do you…")
         lChoice = self.lButton("Get there on time.", lambda: self.theEnd(lChoice, rChoice, img, text))
         rChoice = self.rButton("Show up Late", lambda: self.die(lChoice, rChoice, img, text))
         
@@ -189,7 +189,7 @@ class Window(Frame):
         self.dB(button1, button2, img, text)
         img=self.showImg("Wedding.png")
         secret=Button(self,text= "Congratulations!", command=lambda: self.runAway(lChoice, rChoice, img, text), font=('Sans Serif', 25), width= 54)
-        secret.place(x=200, y=645)
+        secret.place(x=100, y=610)
         text=self.showText(" \n You and Auntie Jemima got married and had Ceasar as your best man. \n Do you want to..")
         lChoice = self.lButton("Exit the Game", lambda: self.client_exit())
         rChoice = self.rButton("Play Again", lambda: self.how2(lChoice, rChoice, secret, img, text))
@@ -263,7 +263,7 @@ class Window(Frame):
     def showText(self,word):
         text = Label(self, text=word, font=('Sans Serif', 25))
         text.pack()
-        text.place(x=200, y=700)
+        text.place(x=100, y=675)
         return text
 
         
