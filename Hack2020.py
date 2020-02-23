@@ -3,8 +3,6 @@ from tkinter import *
 from random import random
 from timer import *
 
-
-
 #download and install pillow:
 # http://www.lfd.uci.edu/~gohlke/pythonlibs/#pillow
 from PIL import Image, ImageTk
