@@ -1,5 +1,6 @@
 # Simple enough, just import everything from tkinter.
 from tkinter import *
+from random import random
 
 
 #download and install pillow:
@@ -10,7 +11,12 @@ from PIL import Image, ImageTk
 # Here, we are creating our class, Window, and inheriting from the Frame
 # class. Frame is a class from the tkinter module. (see Lib/tkinter/__init__)
 class Window(Frame):
+    global lChoice
+    global rChoice
+    global img
+    global text
 
+    
     # Define settings upon initialization. Here you can specify
     def __init__(self, master=None):
         
@@ -25,6 +31,7 @@ class Window(Frame):
 
     #Creation of init_window
     def init_window(self):
+        self.clicks=0
 
         # changing the title of our master widget      
         self.master.title("GUI")
@@ -50,7 +57,7 @@ class Window(Frame):
         file.add_command(label="Choked Up", command=lambda: self.kareoke(lChoice, rChoice, img, text))
         file.add_command(label="Coldfeet", command= lambda: self.coldfeet(lChoice, rChoice, img, text))
         file.add_command(label="The End", command=lambda: self.theEnd(lChoice, rChoice, img, text))
-        file.add_command(label="The Bunny!", command=lambda: self.runAway(lChoice, rChoice, img, text))
+        file.add_command(label="The Bunny!", command=lambda: self.runAway2(lChoice, rChoice, img, text))
         file.add_command(label="Exit Game", command=self.client_exit)
 
 
@@ -63,13 +70,42 @@ class Window(Frame):
 
         # adds a command to the menu option, calling it exit, and the
         # command it runs on event is client_exit
-        edit.add_command(label="Show Img", command=self.showImg)
-        edit.add_command(label="Show Text", command=self.showText)
+        edit.add_command(label="Wabbits", command=lambda: self.wabbits(lChoice, rChoice, img, text))
 
-        #added "file" to our menu
-        menu.add_cascade(label="Edit", menu=edit)
-        # creating a button instance
-
+        #added "file" to our menu        menu.add_cascade(label="Games", menu=edit
+        img=self.showImg("MainTitle.png")
+        text = Label(self, text="The Many Adventures of Mr. Gonzales", font=('Sans Serif', 25))
+        text.pack()
+        text.place(x=45, y=0)
+        lChoice = Button(self, text="BEGIN", command=lambda: self.how(lChoice, rChoice, img, text), font=('Sans Serif', 25))
+        rChoice = Button(self, text="RUN AWAY", command=self.client_exit, font=('Sans Serif', 25))
+        lChoice.place(x=50, y=500)
+        rChoice.place(x= 400, y=500)
+        
+    def start(self,button1,img):
+        self.dB3(button1, img)
+        img=self.showImg("MainTitle.png")
+        text = Label(self, text="The Many Adventures of Mr. Gonzales", font=('Sans Serif', 25))
+        text.pack()
+        text.place(x=45, y=0)
+        lChoice = Button(self, text="BEGIN", command=lambda: self.how(lChoice, rChoice, img, text), font=('Sans Serif', 25))
+        rChoice = Button(self, text="RUN AWAY", command=self.client_exit, font=('Sans Serif', 25))
+        lChoice.place(x=50, y=500)
+        rChoice.place(x= 400, y=500)
+        
+    def start2(self,button1, button2,img,text):
+        self.dB(button1, button2, img, text)
+        img=self.showImg("MainTitle.png")
+        text = Label(self, text="The Many Adventures of Mr. Gonzales", font=('Sans Serif', 25))
+        text.pack()
+        text.place(x=45, y=0)
+        lChoice = Button(self, text="BEGIN", command=lambda: self.how(lChoice, rChoice, img, text), font=('Sans Serif', 25))
+        rChoice = Button(self, text="RUN AWAY", command=self.client_exit, font=('Sans Serif', 25))
+        lChoice.place(x=50, y=500)
+        rChoice.place(x= 400, y=500)
+        
+    def start3(self,button1, button2, button3, img,text):
+        self.dB2(button1, button2, button3, img, text)
         img=self.showImg("MainTitle.png")
         text = Label(self, text="The Many Adventures of Mr. Gonzales", font=('Sans Serif', 25))
         text.pack()
@@ -86,20 +122,6 @@ class Window(Frame):
         lChoice = self.lButton("Go with Dad.", lambda: self.eat(lChoice, rChoice, img, text))
         rChoice = self.rButton("Don't go with Dad", lambda: self.die(lChoice, rChoice, img, text))
 
-    def how3(self, button1, img):
-        self.dB3(button1, img)
-        img=self.showImg("Scene1.png")
-        text=self.showText("Dad asks you to go on a cruise with him. \n Do you go?")
-        lChoice = self.lButton("Go with Dad.", lambda: self.eat(lChoice, rChoice, img, text))
-        rChoice = self.rButton("Don't go with Dad", lambda: self.die(lChoice, rChoice, img, text))
-        
-    def how2(self, button1, button2, button3, img,text):
-        self.dB2(button1, button2, button3, img, text)
-        img=self.showImg("Scene1.png")
-        text=self.showText("Dad asks you to go on a cruise with him. \n Do you go?")
-        lChoice = self.lButton("Go with Dad.", lambda: self.eat(lChoice, rChoice, img, text))
-        rChoice = self.rButton("Don't go with Dad", lambda: self.die(lChoice, rChoice, img, text))
-        
         
     def eat(self, button1, button2,img,text):
         self.dB(button1, button2, img, text)
@@ -107,8 +129,6 @@ class Window(Frame):
         text=self.showText("When you and Dad get on the cruise, he smells a delicious breakfast buffet. \n Dad decides to go to the buffet. Do you go?")
         lChoice = self.lButton("Follow Dad", lambda: self.die(lChoice, rChoice, img, text))
         rChoice = self.rButton("Go your own path.", lambda: self.ownPath(lChoice, rChoice, img, text))
-    
-    
 
     def ownPath(self, button1, button2,img,text):
         self.dB(button1, button2, img, text)
@@ -188,38 +208,48 @@ class Window(Frame):
     def theEnd(self, button1, button2,img,text):
         self.dB(button1, button2, img, text)
         img=self.showImg("Wedding.png")
-        secret=Button(self,text= "Congratulations!", command=lambda: self.runAway(lChoice, rChoice, img, text), font=('Sans Serif', 25), width= 54)
+        secret=Button(self,text= "Congratulations!", command=lambda: self.runAway(lChoice, rChoice, secret, img, text), font=('Sans Serif', 25), width= 54)
         secret.place(x=100, y=610)
         text=self.showText(" \n You and Auntie Jemima got married and had Ceasar as your best man. \n Do you want to..")
         lChoice = self.lButton("Exit the Game", lambda: self.client_exit())
-        rChoice = self.rButton("Play Again", lambda: self.how2(lChoice, rChoice, secret, img, text))
+        rChoice = self.rButton("Play Again", lambda: self.start3(lChoice, rChoice, secret, img, text))
         
 
-    def runAway(self, button1, button2,img,text):
+    def runAway(self, button1, button2,button,img,text):
+        self.dB2(button1, button2, button, img, text)
+        img=self.showImg("RUN AWAY.png")
+        text=self.showText("You go outside to sunbathe and you see a bunny in the corner of your yard. Do you..")
+        lChoice = self.lButton("MURDER", lambda: self.win(lChoice, rChoice, img, text))
+        rChoice = self.rButton("murder", lambda: self.die(lChoice, rChoice, img, text))
+    def runAway2(self, button1, button2,img,text):
         self.dB(button1, button2, img, text)
         img=self.showImg("RUN AWAY.png")
         text=self.showText("You go outside to sunbathe and you see a bunny in the corner of your yard. Do you..")
-        lChoice = self.lButton("MURDER", self.win)
+        lChoice = self.lButton("MURDER", lambda: self.win(lChoice, rChoice, img, text))
         rChoice = self.rButton("murder", lambda: self.die(lChoice, rChoice, img, text))
 
     def die2(self, button1, button2, button, img, text):
         self.dB2(button1, button2, button3, img, text) 
         img=self.showImg("GameOver.png")
-        new= Button(self, text="Restart", command=lambda: self.how3(new,img),font=('Sans Serif', 30))
+        new= Button(self, text="Restart", command=lambda: self.start1(new,img),font=('Sans Serif', 30))
         new.place(x= 300, y= 200)
 
     def die(self, button1, button2, img, text):
         self.dB(button1, button2, img, text) 
         img=self.showImg("GameOver.png")
-        new= Button(self, text="Restart", command=lambda: self.how3(new,img),font=('Sans Serif', 30))
+        new= Button(self, text="Restart", command=lambda: self.start(new,img),font=('Sans Serif', 30))
         new.place(x= 300, y= 200)
         
-    def win(self):
+    def win(self, button1, button2, img, text):
+        self.dB(button1, button2, img, text) 
         img=self.showImg("RUN AWAY.png")
         text = Label(self, text="YOU WIN- \n THE PINK BELT IS YOURS FOR THE TAKING", font=('Sans Serif', 50))
         text.pack()
         text.place(x=0, y=300)
-
+        buttonQuit = Button(self,text="Quit", command=self.client_exit, font=('Sans Serif', 30))
+        buttonQuit.place(x=100, y=500)
+        game= Button(self, text="Restart", command=lambda: self.start2(game, buttonQuit, img, text),font=('Sans Serif', 30))
+        game.place(x= 700, y= 500)
 
     def dB3(self, button1, img):
         button1.destroy()
@@ -231,7 +261,6 @@ class Window(Frame):
         button3.destroy()
         img.destroy()
         text.destroy()
-        
         
     def dB(self, button1, button2, img, text):
         button1.destroy()
@@ -270,14 +299,36 @@ class Window(Frame):
 
     def client_exit(self):
         exit()
+
+
+
+    def wabbits(self, button1, button2, img, text):
+        self.clicks=0
+        self.dB(button1, button2, img, text)
+        Choice = Button(self, text="wabbits", command=lambda: self.wabbits2(Choice), font=('Sans Serif', 30))
+        x=random()*500
+        y=random()*500
+        Choice.place(x=x, y=y)
+        self.showText(str(self.clicks))
         
-    
+    def wabbits2(self,Choice):
+        self.clicks= self.clicks +1
+        self.dR(Choice)
+        Choice = Button(self, text="wabbits", command=lambda: self.wabbits2(Choice), font=('Sans Serif', 30))
+        x=random()*500
+        y=random()*500
+        Choice.place(x=x, y=y)
+        self.showText(str(self.clicks))
+
+    def dR(self, button1):
+        button1.destroy()
+
+ 
 
 
 # root window created. Here, that would be the only window, but
 # you can later have windows within windows.
 root = Tk()
-
 
 root.geometry("{0}x{1}+0+0".format(root.winfo_screenwidth(), root.winfo_screenheight()))
 
