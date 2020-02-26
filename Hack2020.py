@@ -23,7 +23,7 @@ class Window(Frame):
 
         #reference to the master widget, which is the tk window                 
         self.master = master
-
+        self.gc = []
         #with that, we want to then run init_window, which doesn't yet exist
         self.init_window()
         self.timer=timer(self,1)
@@ -31,12 +31,11 @@ class Window(Frame):
 
 
 
+
     #Creation of init_window
     def init_window(self):
         self.clicks=0
         
-        
-
         # changing the title of our master widget      
         self.master.title("GUI")
 
@@ -51,16 +50,16 @@ class Window(Frame):
         file = Menu(menu, tearoff=0)
 
         # adds a command to the menu option for level selection
-        file.add_command(label="All you can Eat", command=lambda: self.eat(lChoice, rChoice, img, text))
-        file.add_command(label="Lost at Sea", command=lambda: self.ownPath(lChoice, rChoice, img, text))
-        file.add_command(label="Elf Overboard", command=lambda: self.overboard(lChoice, rChoice, img, text))
-        file.add_command(label="Sharkboait ooo aha", command=lambda: self.sharkBait(lChoice, rChoice, img, text))
-        file.add_command(label="Sticky Business", command=lambda: self.sticky(lChoice, rChoice, img, text))
-        file.add_command(label="Bad Day Bidet", command=lambda: self.badDay(lChoice, rChoice, img, text))
-        file.add_command(label="Choked Up", command=lambda: self.kareoke(lChoice, rChoice, img, text))
-        file.add_command(label="Coldfeet", command= lambda: self.coldfeet(lChoice, rChoice, img, text))
-        file.add_command(label="The End", command=lambda: self.theEnd(lChoice, rChoice, img, text))
-        file.add_command(label="The Bunny!", command=lambda: self.runAway2(lChoice, rChoice, img, text))
+        file.add_command(label="All you can Eat", command=self.eat)
+        file.add_command(label="Lost at Sea", command=self.ownPath)
+        file.add_command(label="Elf Overboard", command=self.overboard)
+        file.add_command(label="Sharkboait ooo aha", command=self.sharkBait)
+        file.add_command(label="Sticky Business", command=self.sticky)
+        file.add_command(label="Bad Day Bidet", command=self.badDay)
+        file.add_command(label="Choked Up", command=self.kareoke)
+        file.add_command(label="Coldfeet", command= self.coldfeet)
+        file.add_command(label="The End", command=self.theEnd)
+        file.add_command(label="The Bunny!", command=self.runAway2)
         file.add_command(label="Exit Game", command=self.client_exit)
 
 
@@ -82,190 +81,254 @@ class Window(Frame):
         text = Label(self, text="The Many Adventures of Mr. Gonzales", font=('Sans Serif', 25))
         text.pack()
         text.place(x=45, y=0)
-        lChoice = Button(self, text="BEGIN", command=lambda: self.how(lChoice, rChoice, img, text), font=('Sans Serif', 25))
+        lChoice = Button(self, text="BEGIN", command=self.how, font=('Sans Serif', 25))
         rChoice = Button(self, text="RUN AWAY", command=self.client_exit, font=('Sans Serif', 25))
         lChoice.place(x=50, y=500)
         rChoice.place(x= 400, y=500)
+        self.gc.append(img)
+        self.gc.append(text)
+        self.gc.append(lChoice)
+        self.gc.append(rChoice)
         
-    def start(self,button1,img):
-        self.dB3(button1, img)
+    def start(self):
+        self.dumpgc()
         img=self.showImg("MainTitle.png")
         text = Label(self, text="The Many Adventures of Mr. Gonzales", font=('Sans Serif', 25))
         text.pack()
         text.place(x=45, y=0)
-        lChoice = Button(self, text="BEGIN", command=lambda: self.how(lChoice, rChoice, img, text), font=('Sans Serif', 25))
+        lChoice = Button(self, text="BEGIN", command=self.how, font=('Sans Serif', 25))
         rChoice = Button(self, text="RUN AWAY", command=self.client_exit, font=('Sans Serif', 25))
         lChoice.place(x=50, y=500)
         rChoice.place(x= 400, y=500)
+        self.gc.append(img)
+        self.gc.append(text)
+        self.gc.append(lChoice)
+        self.gc.append(rChoice)
         
-    def start2(self,button1, button2,img,text):
-        self.dB(button1, button2, img, text)
+    def start2(self):
+        self.dumpgc()
         img=self.showImg("MainTitle.png")
         text = Label(self, text="The Many Adventures of Mr. Gonzales", font=('Sans Serif', 25))
         text.pack()
         text.place(x=45, y=0)
-        lChoice = Button(self, text="BEGIN", command=lambda: self.how(lChoice, rChoice, img, text), font=('Sans Serif', 25))
+        lChoice = Button(self, text="BEGIN", command=self.how, font=('Sans Serif', 25))
         rChoice = Button(self, text="RUN AWAY", command=self.client_exit, font=('Sans Serif', 25))
         lChoice.place(x=50, y=500)
         rChoice.place(x= 400, y=500)
+        self.gc.append(img)
+        self.gc.append(text)
+        self.gc.append(lChoice)
+        self.gc.append(rChoice)
         
-    def start3(self,button1, button2, button3, img,text):
-        self.dB2(button1, button2, button3, img, text)
+    def start3(self):
+        self.dumpgc()
         img=self.showImg("MainTitle.png")
         text = Label(self, text="The Many Adventures of Mr. Gonzales", font=('Sans Serif', 25))
         text.pack()
         text.place(x=45, y=0)
-        lChoice = Button(self, text="BEGIN", command=lambda: self.how(lChoice, rChoice, img, text), font=('Sans Serif', 25))
+        lChoice = Button(self, text="BEGIN", command=self.how, font=('Sans Serif', 25))
         rChoice = Button(self, text="RUN AWAY", command=self.client_exit, font=('Sans Serif', 25))
         lChoice.place(x=50, y=500)
         rChoice.place(x= 400, y=500)
+        self.gc.append(img)
+        self.gc.append(text)
+        self.gc.append(lChoice)
+        self.gc.append(rChoice)
 
-    def how(self, button1, button2,img,text):
-        self.dB(button1, button2, img, text)
+    def how(self):
+        self.dumpgc()
         img=self.showImg("Scene1.png")
         text=self.showText("Dad asks you to go on a cruise with him. \n Do you go?")
-        lChoice = self.lButton("Go with Dad.", lambda: self.eat(lChoice, rChoice, img, text))
-        rChoice = self.rButton("Don't go with Dad", lambda: self.die(lChoice, rChoice, img, text))
-
+        lChoice = self.lButton("Go with Dad.", self.eat)
+        rChoice = self.rButton("Don't go with Dad", self.die)
+        self.gc.append(img)
+        self.gc.append(text)
+        self.gc.append(lChoice)
+        self.gc.append(rChoice)
+        self.gc.append(img)
+        self.gc.append(text)
+        self.gc.append(lChoice)
+        self.gc.append(rChoice)
         
-    def eat(self, button1, button2,img,text):
-        self.dB(button1, button2, img, text)
+    def eat(self):
+        self.dumpgc()
         img=self.showImg("Hallway Scene.png")
         text=self.showText("When you and Dad get on the cruise, he smells a delicious breakfast buffet. \n Dad decides to go to the buffet. Do you go?")
-        lChoice = self.lButton("Follow Dad", lambda: self.die(lChoice, rChoice, img, text))
-        rChoice = self.rButton("Go your own path.", lambda: self.ownPath(lChoice, rChoice, img, text))
+        lChoice = self.lButton("Follow Dad", self.die)
+        rChoice = self.rButton("Go your own path.", self.ownPath)
+        self.gc.append(img)
+        self.gc.append(text)
+        self.gc.append(lChoice)
+        self.gc.append(rChoice)
 
-    def ownPath(self, button1, button2,img,text):
-        self.dB(button1, button2, img, text)
+    def ownPath(self):
+        self.dumpgc()
         img=self.showImg("Hallway Scene.png")
         text=self.showText("You decided to go your own path. Do you ...")
-        lChoice = self.lButton("Go Left.", lambda: self.left(lChoice, rChoice, img, text))
-        rChoice = self.rButton("Go Right.", lambda: self.right(lChoice, rChoice, img, text))
+        lChoice = self.lButton("Go Left.", self.left)
+        rChoice = self.rButton("Go Right.", self.right)
+        self.gc.append(img)
+        self.gc.append(text)
+        self.gc.append(lChoice)
+        self.gc.append(rChoice)        
         
-        
-    def left(self, button1, button2,img,text):
-        self.dB(button1, button2, img, text)
+    def left(self):
+        self.dumpgc()
         img=self.showImg("Hallway Scene.png")
         text=self.showText("After going left. Do you ... ")
-        lChoice = self.lButton("Go Left.", lambda: self.overboard(lChoice, rChoice, img, text))
-        rChoice = self.rButton("Go Right.", lambda: self.die(lChoice, rChoice, img, text))
+        lChoice = self.lButton("Go Left.", self.overboard)
+        rChoice = self.rButton("Go Right.", self.die)
+        self.gc.append(img)
+        self.gc.append(text)
+        self.gc.append(lChoice)
+        self.gc.append(rChoice)
        
         
-    def right(self, button1, button2,img,text):
-        self.dB(button1, button2, img, text)
+    def right(self):
+        self.dumpgc()
         img=self.showImg("Hallway Scene.png")
         text=self.showText("After going Right. Do you...")
-        lChoice = self.lButton("Go Left.", lambda: self.overboard(lChoice, rChoice, img, text))
-        rChoice = self.rButton("Go Right.", lambda: self.die(lChoice, rChoice, img, text))
-  
+        lChoice = self.lButton("Go Left.", self.overboard)
+        rChoice = self.rButton("Go Right.", self.die)
+        self.gc.append(img)
+        self.gc.append(text)
+        self.gc.append(lChoice)
+        self.gc.append(rChoice)
 
 
-    def overboard(self, button1, button2,img,text):
-        self.dB(button1, button2, img, text)
+    def overboard(self):
+        self.dumpgc()
         img=self.showImg("ocean.png")
         text=self.showText(" You decide that you need to relax a bit after walking around for a bit. \n Do you want to relax by the pool or look out over the sea?")
-        lChoice = self.lButton("Look out over the sea", lambda: self.die(lChoice, rChoice, img, text))
-        rChoice = self.rButton("Relax by the pool", lambda: self.sharkBait(lChoice, rChoice, img, text))
+        lChoice = self.lButton("Look out over the sea", self.die)
+        rChoice = self.rButton("Relax by the pool", self.sharkBait)
+        self.gc.append(img)
+        self.gc.append(text)
+        self.gc.append(lChoice)
+        self.gc.append(rChoice)
         
 
-    def sharkBait(self, button1, button2,img,text):
-        self.dB(button1, button2, img, text)
+    def sharkBait(self):
+        self.dumpgc()
         img=self.showImg("Pool Scene1.png")
         text=self.showText("Good choice to decide to relax by the pool. \n While relaxing, you see a hammerhead shark. \n Do you decide to…")
-        lChoice = self.lButton("Run Away", lambda: self.die(lChoice, rChoice, img, text))
-        rChoice = self.rButton("Freeze", lambda: self.sticky(lChoice, rChoice, img, text))
-      
-
-
-    def sticky(self, button1, button2,img,text):
-        self.dB(button1, button2, img, text)
+        lChoice = self.lButton("Run Away", self.die)
+        rChoice = self.rButton("Freeze", self.sticky)
+        self.gc.append(img)
+        self.gc.append(text)
+        self.gc.append(lChoice)
+        self.gc.append(rChoice)
+        
+    def sticky(self):
+        self.dumpgc()
         img=self.showImg("Pool Scene 2.png")
         text=self.showText("The hammerhead shark sees that you are scared and comes up to you. \n He introduces himself as Ceasar and you become best friends. \nAs your wingman, he spots a pretty lady across the pool. Do you…")
-        lChoice = self.lButton("Buy her a drink", lambda: self.badDay(lChoice, rChoice, img, text))
-        rChoice = self.rButton("Spill your drink on yourself", lambda: self.die(lChoice, rChoice, img, text))
-        
+        lChoice = self.lButton("Buy her a drink", self.badDay)
+        rChoice = self.rButton("Spill your drink on yourself", self.die)
+        self.gc.append(img)
+        self.gc.append(text)
+        self.gc.append(lChoice)
+        self.gc.append(rChoice)        
 
-    def badDay(self, button1, button2,img,text):
-        self.dB(button1, button2, img, text)
+    def badDay(self):
+        self.dumpgc()
         img=self.showImg("BadDayBide.png")
         text=self.showText("After having a few drinks, you start feeling sick. Do you..")
-        lChoice = self.lButton("Go to the bathroom", lambda: self.die(lChoice, rChoice, img, text))
-        rChoice = self.rButton("Get over yourself", lambda: self.kareoke(lChoice, rChoice, img, text))
-       
+        lChoice = self.lButton("Go to the bathroom", self.die)
+        rChoice = self.rButton("Get over yourself", self.kareoke)
+        self.gc.append(img)
+        self.gc.append(text)
+        self.gc.append(lChoice)
+        self.gc.append(rChoice)
         
-        
-    def kareoke(self, button1, button2,img,text):
-        self.dB(button1, button2, img, text)
+    def kareoke(self):
+        self.dumpgc()
         img=self.showImg("Kareoke.png")
         text=self.showText("To thank you for her a drink, Auntie Jemima invites you to a karaoke contest. \n Do you..")
-        lChoice = self.lButton("Sing Hymn #602", lambda: self.die(lChoice, rChoice, img, text))
-        rChoice = self.rButton("Sing a Backstreet Boys song", lambda: self.coldfeet(lChoice, rChoice, img, text))
-       
+        lChoice = self.lButton("Sing Hymn #602", self.die)
+        rChoice = self.rButton("Sing a Backstreet Boys song", self.coldfeet)
+        self.gc.append(img)
+        self.gc.append(text)
+        self.gc.append(lChoice)
+        self.gc.append(rChoice)       
         
-    def coldfeet(self, button1, button2,img,text):
-        self.dB(button1, button2, img, text)
+    def coldfeet(self):
+        self.dumpgc()
         img=self.showImg("Wedding.png")
         text=self.showText("You wooed Auntie Jemima with your incredible singing skills and propose to her. \n She says yes! Later that night, you are getting ready for the wedding. \n Do you…")
-        lChoice = self.lButton("Get there on time.", lambda: self.theEnd(lChoice, rChoice, img, text))
-        rChoice = self.rButton("Show up Late", lambda: self.die(lChoice, rChoice, img, text))
-        
+        lChoice = self.lButton("Get there on time.", self.theEnd)
+        rChoice = self.rButton("Show up Late", self.die)
+        self.gc.append(img)
+        self.gc.append(text)
+        self.gc.append(lChoice)
+        self.gc.append(rChoice)        
 
-    def theEnd(self, button1, button2,img,text):
-        self.dB(button1, button2, img, text)
+    def theEnd(self):
+        self.dumpgc()
         img=self.showImg("Wedding.png")
-        secret=Button(self,text= "Congratulations!", command=lambda: self.runAway(lChoice, rChoice, secret, img, text), font=('Sans Serif', 25), width= 54)
+        secret=Button(self,text= "Congratulations!", command=self.runAway, font=('Sans Serif', 25), width= 54)
         secret.place(x=100, y=610)
         text=self.showText(" \n You and Auntie Jemima got married and had Ceasar as your best man. \n Do you want to..")
-        lChoice = self.lButton("Exit the Game", lambda: self.client_exit())
-        rChoice = self.rButton("Play Again", lambda: self.start3(lChoice, rChoice, secret, img, text))
-        
+        lChoice = self.lButton("Exit the Game", self.client_exit)
+        rChoice = self.rButton("Play Again", self.start3)
+        self.gc.append(img)
+        self.gc.append(text)
+        self.gc.append(lChoice)
+        self.gc.append(rChoice)
+        self.gc.append(secret)        
 
-    def runAway(self, button1, button2,button,img,text):
-        self.dB2(button1, button2, button, img, text)
+    def runAway(self):
+        self.dumpgc()
         img=self.showImg("RUN AWAY.png")
         text=self.showText("You go outside to sunbathe and you see a bunny in the corner of your yard. Do you..")
-        lChoice = self.lButton("MURDER", lambda: self.win(lChoice, rChoice, img, text))
-        rChoice = self.rButton("murder", lambda: self.die(lChoice, rChoice, img, text))
-    def runAway2(self, button1, button2,img,text):
-        self.dB(button1, button2, img, text)
+        lChoice = self.lButton("MURDER", self.win)
+        rChoice = self.rButton("murder", self.die)
+        self.gc.append(img)
+        self.gc.append(text)
+        self.gc.append(lChoice)
+        self.gc.append(rChoice)
+
+    def runAway2(self):
+        self.dumpgc()
         img=self.showImg("RUN AWAY.png")
         text=self.showText("You go outside to sunbathe and you see a bunny in the corner of your yard. Do you..")
-        lChoice = self.lButton("MURDER", lambda: self.win(lChoice, rChoice, img, text))
-        rChoice = self.rButton("murder", lambda: self.die(lChoice, rChoice, img, text))
+        lChoice = self.lButton("MURDER", self.win)
+        rChoice = self.rButton("murder", self.die)
+        self.gc.append(img)
+        self.gc.append(text)
+        self.gc.append(lChoice)
+        self.gc.append(rChoice)
 
-    def die2(self, button1, button2, button, img, text):
-        self.dB2(button1, button2, button3, img, text) 
+    def die2(self):
+        self.dumpgc()
         img=self.showImg("GameOver.png")
-        new= Button(self, text="Restart", command=lambda: self.start1(new,img),font=('Sans Serif', 30))
+        new= Button(self, text="Restart", command=self.start1,font=('Sans Serif', 30))
         new.place(x= 300, y= 200)
+        self.gc.append(img)
+        self.gc.append(new)
 
-    def die(self, button1, button2, img, text):
-        self.dB(button1, button2, img, text) 
+    def die(self):
+        self.dumpgc()
         img=self.showImg("GameOver.png")
-        new= Button(self, text="Restart", command=lambda: self.start(new,img),font=('Sans Serif', 30))
+        new= Button(self, text="Restart", command=self.start,font=('Sans Serif', 30))
         new.place(x= 300, y= 200)
+        self.gc.append(img)
+        self.gc.append(new)
         
-    def win(self, button1, button2, img, text):
-        self.dB(button1, button2, img, text) 
+    def win(self):
+        self.dumpgc()
         img=self.showImg("RUN AWAY.png")
         text = Label(self, text="YOU WIN- \n THE PINK BELT IS YOURS FOR THE TAKING", font=('Sans Serif', 50))
         text.pack()
         text.place(x=0, y=300)
         buttonQuit = Button(self,text="Quit", command=self.client_exit, font=('Sans Serif', 30))
         buttonQuit.place(x=100, y=500)
-        game= Button(self, text="Restart", command=lambda: self.start2(game, buttonQuit, img, text),font=('Sans Serif', 30))
+        game= Button(self, text="Restart", command=self.start2,font=('Sans Serif', 30))
         game.place(x= 700, y= 500)
-
-    def dB3(self, button1, img):
-        button1.destroy()
-        img.destroy()
-        
-    def dB2(self, button1, button2, button3, img, text):
-        button1.destroy()
-        button2.destroy()
-        button3.destroy()
-        img.destroy()
-        text.destroy()
+        self.gc.append(img)
+        self.gc.append(text)
+        self.gc.append(buttonQuit)
+        self.gc.append(game)
         
     def dB(self, button1, button2, img, text):
         button1.destroy()
@@ -300,12 +363,8 @@ class Window(Frame):
         text.place(x=100, y=675)
         return text
 
-        
-
     def client_exit(self):
         exit()
-
-
 
     def wabbits(self, button1, button2, img, text):
         self.timer.reset()
@@ -335,7 +394,9 @@ class Window(Frame):
     def dR(self, button1):
         button1.destroy()
 
- 
+    def dumpgc(self):
+        while (len(self.gc) > 0):
+            self.gc.pop().destroy()
 
 
 # root window created. Here, that would be the only window, but
